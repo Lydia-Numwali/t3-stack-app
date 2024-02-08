@@ -33,6 +33,7 @@ const useFetchShopRequests = (
           requestId: request.requestId,
           orderId: request.orderId,
           id: request._id,
+          
           requestStatus:
             request.requestStatus.toLowerCase() as ShopRequestPackageType["requestStatus"],
           requestLocalDate: new Date(request.createdAt).toLocaleString(
@@ -186,6 +187,8 @@ export interface ShipmentAddress {
 }
 
 export interface RequestItem {
+  itemUrl: any;
+  additionalDescription: any;
   store: string;
   itemName: string;
   urgent: boolean;

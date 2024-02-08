@@ -192,6 +192,7 @@ const RequestOrderForm = () => {
 
   const handleFinish = () => {
     handleRequests();
+  
     handleTabChange("requests");
   };
 
