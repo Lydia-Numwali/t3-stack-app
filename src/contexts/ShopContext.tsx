@@ -80,6 +80,7 @@ export type PackageCostsType = {
 export type ShopDraftPackageType = ShopInputs;
 
 export type ShopOrderPackageType = {
+  id: string;
   orderId: string;
   orderStatus: any;
   orderLocalDate: string;

@@ -59,6 +59,8 @@ import {
 } from "../Requests/RequestCheckout";
 import { LabelWithTooltip, PackageOrigin } from "../Requests/RequestDetails";
 import { PurpleDetailSection } from "./ClearPackage";
+import useFetchInitiateShoppingRequest from "~/hooks/useFetchInitiateShopping";
+import { useCookies } from "react-cookie";
 
 type InitiateShippingInputs = {
   destinationWarehouse: (typeof DESTINATIONS)[number];
@@ -75,9 +77,12 @@ const InitiateShipping = () => {
   const { orderPackages } = useShopContext();
   const { viewIndex, handleActiveAction, handleTabChange } = useTabContext();
 
+  const [cookies] = useCookies(["jwt"]);
+  const token = cookies.jwt as string;
   if (viewIndex === null) return;
 
   const orderPackage = orderPackages?.[viewIndex];
+  // console.log(orderPackage)
 
   if (!orderPackage) return;
 
@@ -119,6 +124,10 @@ const InitiateShipping = () => {
 
   const handleFinish = () => {
     handleTabChange("orders");
+  };
+  const handleInitiateShipping = () => {
+    // useFetchInitiateShoppingRequest(orderPackage.id, token);
+    next()
   };
 
   useEffect(() => {
@@ -188,7 +197,7 @@ const InitiateShipping = () => {
         {currentStepIndex === 2 && (
           <InitiateShippingAgreement
             back={back}
-            next={formMethods.handleSubmit(onSubmit)}
+            next={formMethods.handleSubmit(handleInitiateShipping)}
           />
         )}
 
@@ -491,6 +500,7 @@ const BillingAddressStep = () => {
   if (viewIndex === null) return;
 
   const orderPackage = orderPackages?.[viewIndex];
+  console.log(orderPackage)
 
   if (!orderPackage) return;
 
@@ -657,11 +667,13 @@ export const ShippingImportantNotice = () => {
 const InitiateShippingStep = () => {
   const { register } = useFormContext<InitiateShippingInputs>();
   const { orderPackages } = useShopContext();
+
   const { viewIndex } = useTabContext();
 
   if (viewIndex === null) return;
 
   const orderPackage = orderPackages?.[viewIndex];
+  console.log(orderPackage);
 
   if (!orderPackage) return;
 
