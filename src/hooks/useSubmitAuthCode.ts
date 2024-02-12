@@ -35,7 +35,7 @@ const useSubmitAuthCode = () => {
       email: responseData.user.email,
       jwt: responseData.jwt,
       racId: responseData.user.racId,
-      billingDetails: {
+      billingAddress: {
         countryCode: responseData.user.contactAddress[0]?.countryCode ?? "",
         phoneNumber: responseData.user.contactAddress[0]?.phoneNumber ?? "",
         address: responseData.user.contactAddress[0]?.streetAddress ?? "",

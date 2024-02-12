@@ -235,7 +235,7 @@ const PackageConfirmation = () => {
   if (viewIndex === null) return;
 
   const requestPackage = requestPackages?.[viewIndex];
-  console.log(requestPackage)
+  console.log(requestPackage);
 
   if (!requestPackage) return;
 
@@ -268,7 +268,7 @@ const BillingAddressStep = () => {
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
-    ...user.billingDetails,
+    ...user.billingAddress,
   };
 
   const [radio, setRadio] = useState<BillingAddressChoicesType>("default");

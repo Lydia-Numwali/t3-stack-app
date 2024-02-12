@@ -319,7 +319,7 @@ const BillingAddress = () => {
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
-    ...user.billingDetails,
+    ...user.billingAddress,
   };
 
   const [radio, setRadio] = useState<BillingAddressChoicesType>("default");
@@ -959,19 +959,23 @@ export const ShopPackageTableFooter = ({
         <DetailSection
           label="Total Items Cost from Store"
           labelMaxWidth="max-w-[125px]"
-          value={itemsCostFromStore>=0 ? formatCurrency(itemsCostFromStore) : ""}
+          value={
+            itemsCostFromStore >= 0 ? formatCurrency(itemsCostFromStore) : ""
+          }
         />
       </div>
       <div className="col-span-1">
         <DetailSection
           label="Processing fee"
-          value={processingFee>=0 ? formatCurrency(processingFee) : ""}
+          value={processingFee >= 0 ? formatCurrency(processingFee) : ""}
         />
       </div>
       <div className="col-span-1">
         <DetailSection
           label="Urgent Purchase fee"
-          value={urgentPurchaseFee>=0 ? formatCurrency(urgentPurchaseFee) : ""}
+          value={
+            urgentPurchaseFee >= 0 ? formatCurrency(urgentPurchaseFee) : ""
+          }
         />
       </div>
       <div className="col-span-1">
@@ -979,7 +983,7 @@ export const ShopPackageTableFooter = ({
           label="Total Shipping to Origin Warehouse Cost"
           labelMaxWidth="max-w-[182px]"
           value={
-            shippingToOriginWarehouseCost>=0
+            shippingToOriginWarehouseCost >= 0
               ? formatCurrency(shippingToOriginWarehouseCost)
               : ""
           }

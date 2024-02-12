@@ -22,7 +22,7 @@ const useFetchUser = async (token: string) => {
     email: user.email,
     jwt: token,
     racId: user.racId,
-    billingDetails: {
+    billingAddress: {
       countryCode: user.contactAddress[0]?.countryCode ?? "",
       phoneNumber: String(user.contactAddress[0]?.phoneNumber ?? ""),
       address: user.contactAddress[0]?.streetAddress ?? "",

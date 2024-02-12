@@ -527,7 +527,7 @@ type BillingAddressProps = { billingDetails: BillingDetailsType };
 export const BillingAddress = ({ billingDetails }: BillingAddressProps) => {
   const { open, toggle } = useAccordion(true);
 
-  console.log("billingDetails", billingDetails);
+ 
 
   return (
     <SectionContentLayout>

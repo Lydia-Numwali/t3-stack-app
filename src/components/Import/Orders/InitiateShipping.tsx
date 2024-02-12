@@ -329,12 +329,12 @@ const ImportOrderItemDetails = ({ item }: ImportOrderItemDetailsProps) => {
 const BillingAddressStep = () => {
   const { user } = useAuthContext();
   if (!user) return;
-
+  console.log(user);
   const defaultBillingAddress = {
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
-    ...user.billingDetails,
+    ...user.billingAddress,
   };
 
   const [radio, setRadio] = useState<BillingAddressChoicesType>("default");

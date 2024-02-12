@@ -20,7 +20,7 @@ const CommunicationPreferences = ({
 
   if (!user) return;
 
-  const contactNumber = `${user.billingDetails.countryCode} ${user.billingDetails.phoneNumber}`;
+  const contactNumber = `${user.billingAddress.countryCode} ${user.billingAddress.phoneNumber}`;
 
   const preferences: PreferenceType[] = [
     {

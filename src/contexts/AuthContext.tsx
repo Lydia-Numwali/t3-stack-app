@@ -50,7 +50,8 @@ export type UserType = {
   email: string;
   jwt: string;
   racId: string;
-  billingDetails: {
+
+  billingAddress: {
     countryCode: string;
     phoneNumber: string;
     address: string;

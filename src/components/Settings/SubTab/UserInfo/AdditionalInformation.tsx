@@ -209,7 +209,7 @@ const ModalContent = ({ idPrefix }: ModalContentProps) => {
   // todo: replace values
   const defaultBusinessAddress = {
     email: user.email,
-    ...user.billingDetails,
+    ...user.billingAddress,
   };
 
   const [radio, setRadio] = useState<BillingAddressChoicesType>("default");

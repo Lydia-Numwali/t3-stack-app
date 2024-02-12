@@ -882,12 +882,13 @@ const DropOffAddress = ({ index }: DropOffAddressProps) => {
 export const Step2 = () => {
   const { user } = useAuthContext();
   if (!user) return;
+  console.log(user);
 
   const defaultBillingAddress = {
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
-    ...user.billingDetails,
+    ...user.billingAddress,
   };
 
   const [radio, setRadio] = useState<BillingAddressChoicesType>("default");
@@ -1125,8 +1126,8 @@ export const Step3 = () => {
         <OriginWarehouseAddress
           officeLocation={
             WAREHOUSE_LOCATIONS[
-            getValues("requestPackage")
-              .originWarehouse as (typeof ORIGINS)[number]
+              getValues("requestPackage")
+                .originWarehouse as (typeof ORIGINS)[number]
             ]
           }
         />
@@ -1137,11 +1138,15 @@ export const Step3 = () => {
       })}
       <SectionHeader title="Confirm your Shipping Details" />
       <DestinationAddressDetails
-        destinationDetails={getValues("requestPackage").destinationDetails as BillingDetailsType}
+        destinationDetails={
+          getValues("requestPackage").destinationDetails as BillingDetailsType
+        }
       />
       <SectionHeader title="Confirm your Billing Details" />
       <BillingAddress
-        billingDetails={getValues("requestPackage").billingDetails as BillingDetailsType}
+        billingDetails={
+          getValues("requestPackage").billingDetails as BillingDetailsType
+        }
       />
     </div>
   );
@@ -1350,7 +1355,10 @@ const AutoImportOrderItem = ({ index, item }: AutoImportOrderItemProps) => {
         {item.pickupDetails && (
           <>
             <hr className="block w-full border-dashed border-primary-600" />
-            <PickupDetails pickupDetails={item.pickupDetails as PickupDetailsType} highlightedInfo />
+            <PickupDetails
+              pickupDetails={item.pickupDetails as PickupDetailsType}
+              highlightedInfo
+            />
           </>
         )}
       </div>
@@ -1360,8 +1368,8 @@ const AutoImportOrderItem = ({ index, item }: AutoImportOrderItemProps) => {
 
 type AutoImportOrderItemDetailsProps = {
   item:
-  | AutoImportInputs["requestPackage"]["items"][number]
-  | AutoImportItemType;
+    | AutoImportInputs["requestPackage"]["items"][number]
+    | AutoImportItemType;
 };
 
 export const AutoImportOrderItemDetails = ({

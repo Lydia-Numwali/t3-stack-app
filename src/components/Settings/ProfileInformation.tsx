@@ -116,7 +116,7 @@ const ProfileInformation = ({ handleHideTabs }: SettingsTabContentProps) => {
     // todo: add loading state to edit personal info button
   };
 
-  const { address, city, state, country, zipPostalCode } = user.billingDetails;
+  const { address, city, state, country, zipPostalCode } = user.billingAddress;
   const location = `${address}, ${city}, ${parseStateCode(
     state,
     country,
@@ -159,7 +159,7 @@ const ProfileInformation = ({ handleHideTabs }: SettingsTabContentProps) => {
                 <div className="flex flex-col items-center gap-[10px] md:flex-row">
                   <Call color="#292d32" className="m-[12px] flex-shrink-0" />
                   <span className="title-md md:title-lg break-words !font-medium text-neutral-900 md:!font-normal">
-                    {`${user.billingDetails.countryCode} ${user.billingDetails.phoneNumber}`}
+                    {`${user.billingAddress.countryCode} ${user.billingAddress.phoneNumber}`}
                   </span>
                 </div>
                 <div className="flex flex-col items-center gap-[10px] md:flex-row">

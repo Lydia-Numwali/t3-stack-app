@@ -30,6 +30,9 @@ import {
   DetailSection,
   ShopOrderItem,
 } from "./InitiateShipping";
+import { AuthContext, useAuthContext } from "~/contexts/AuthContext";
+import { BillingDetailsType } from "~/contexts/AutoImportContext";
+import { orderColumns } from "@tanstack/react-table";
 
 const OrderDetails = () => {
   const { orderPackages } = useShopContext();
@@ -54,7 +57,20 @@ const OrderDetails = () => {
     (acc, item) => (acc += item.relatedCosts.shopForMeCost),
     0,
   );
-
+  const {user}=useAuthContext()
+  const defaultBillingAddress: BillingDetailsType = {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    countryCode: user.billingAddress.countryCode,
+    phoneNumber: user.billingAddress.phoneNumber,
+    address: user.billingAddress.address,
+    country: user.billingAddress.country,
+    state: user.billingAddress.state,
+    city: user.billingAddress.state,
+    zipPostalCode:user.billingAddress.zipPostalCode
+  }
+ 
   return (
     <div className="flex flex-col gap-[30px] rounded-[20px] bg-white p-[20px] md:p-[30px]">
       <RequestFormHeader title="Shop For Me Order Details" />
@@ -100,13 +116,13 @@ const OrderDetails = () => {
 
       <div className="flex flex-col gap-[10px]">
         <SectionHeader title="Billing Details" />
-        <BillingAddress billingDetails={orderPackage.billingDetails} />
+        <BillingAddress billingDetails={orderPackage.billingDetails.firstName==""?defaultBillingAddress:orderPackage.billingDetails} />
         <PaymentsInformation>
           <DetailSection
             label="Total Shipment Cost"
             value={
-              totalShippingCost > 0
-                ? formatCurrency(totalShippingCost)
+              orderPackage.totalShippingCost >= 0
+                ? formatCurrency(orderPackage.totalShippingCost)
                 : "Not allocated yet"
             }
             colSpanDesktop={4}
@@ -119,8 +135,8 @@ const OrderDetails = () => {
           <DetailSection
             label="Total Shop For Me Cost"
             value={
-              totalShopForMeCost > 0
-                ? formatCurrency(totalShippingCost)
+              orderPackage.totalShopForMeCost >= 0
+                ? formatCurrency(orderPackage.totalShopForMeCost)
                 : "Not allocated yet"
             }
             colSpanDesktop={4}
@@ -210,9 +226,9 @@ const OrderInformation = ({ info }: OrderInformationProps) => {
 };
 
 export const shopForMeStatuses = {
-  "Purchase in progress": <ArrivedOriginWarehouseStatus />,
-  "Purchase not started": <NotArrivedOriginWarehouseStatus />,
-  "Purchase completed": <SortedOutStatus />,
+  "purchase in progress": <ArrivedOriginWarehouseStatus />,
+  "purchase not started": <NotArrivedOriginWarehouseStatus />,
+  "purchase completed": <SortedOutStatus />,
 };
 
 export default OrderDetails;
