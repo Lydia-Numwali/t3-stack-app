@@ -344,7 +344,7 @@ const ShopOrderItemRelatedCosts = ({
       <PurpleDetailSection
         label="Urgent purchase fee"
         value={
-          relatedCosts.urgentPurchaseFee
+          relatedCosts.urgentPurchaseFee>=0
             ? formatCurrency(relatedCosts.urgentPurchaseFee)
             : ""
         }
@@ -354,9 +354,9 @@ const ShopOrderItemRelatedCosts = ({
       <PurpleDetailSection
         label="Processing Fee"
         value={
-          relatedCosts.processingFee
+          relatedCosts.processingFee>=0
             ? formatCurrency(relatedCosts.processingFee)
-            : ""
+            :""
         }
         colSpanDesktop={4}
       />
@@ -364,7 +364,7 @@ const ShopOrderItemRelatedCosts = ({
       <PurpleDetailSection
         label="Shipping to Origin Warehouse Cost"
         value={
-          relatedCosts.shippingToOriginWarehouseCost
+          relatedCosts.shippingToOriginWarehouseCost>=0
             ? formatCurrency(relatedCosts.shippingToOriginWarehouseCost)
             : ""
         }
@@ -374,7 +374,7 @@ const ShopOrderItemRelatedCosts = ({
       <PurpleDetailSection
         label="Shop For Me Cost"
         value={
-          relatedCosts.shopForMeCost
+          relatedCosts.shopForMeCost>=0
             ? formatCurrency(relatedCosts.shopForMeCost)
             : ""
         }

@@ -200,6 +200,7 @@ const PackageConfirmation = () => {
   if (viewIndex === null) return;
 
   const orderPackage = orderPackages?.[viewIndex];
+  console.log(orderPackage)
 
   if (!orderPackage) return;
 
@@ -212,6 +213,7 @@ const PackageConfirmation = () => {
         and they will be shipped from here to our pickup office in Nigeria"
         />
         <DetailSection
+          
           label="Country of Purchase"
           value={orderPackage.originWarehouse}
         />

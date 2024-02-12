@@ -235,6 +235,7 @@ const PackageConfirmation = () => {
   if (viewIndex === null) return;
 
   const requestPackage = requestPackages?.[viewIndex];
+  console.log(requestPackage)
 
   if (!requestPackage) return;
 
