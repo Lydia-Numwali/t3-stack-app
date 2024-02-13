@@ -49,10 +49,6 @@ import {
 } from "./InitiateShipping";
 import { PickUpInstructions } from "./OrdersPanel";
 import OrderDetails from "./OrderDetails";
-import { usePaystackPayment } from "react-paystack";
-import { useAuthContext } from "~/contexts/AuthContext";
-import { useUpdateShippingPaymentStatus } from "~/hooks/useShippingFeePayment";
-
 
 export type ClearPackageInputs = {
   paymentMethod: (typeof PAYMENT_METHODS)[number]["title"];
@@ -72,7 +68,6 @@ const ClearPackage = () => {
   const orderPackage = orderPackages?.[viewIndex];
 
   if (!orderPackage) return;
-  const { user } = useAuthContext();
 
   const steps: [stepsContentType, ...stepsContentType[]] = [
     { title: "Package Confirmation", content: <PackageConfirmation /> },
@@ -105,53 +100,14 @@ const ClearPackage = () => {
   const formMethods = useForm<ClearPackageInputs>({
     defaultValues: emptyValue,
   });
-    const initializePayment = usePaystackPayment({
-    reference: new Date().getTime().toString(),
-    publicKey: "pk_test_deebbde4eab19e1f1dd98af8f68c04553d379249",
-  });
-  const { updatePaymentStatus } =useUpdateShippingPaymentStatus()
+
   const onSubmit: SubmitHandler<ClearPackageInputs> = async (data) => {
     if (isSecondToLastStep) {
-      const config = {
-        reference: new Date().getTime().toString(),
-        amount: 3 * 120000,
-        email: user.email,
-        firstname: user.firstName,
-        lastname: user.lastName,
-        publicKey: "pk_test_deebbde4eab19e1f1dd98af8f68c04553d379249",
-      };
-
-
-      initializePayment({
-        onSuccess: successPayment,
-        onClose: cancelPayment,
-        config: config,
-      });
-    } else {
-      next();
+      console.log(data);
     }
+    next();
   };
 
-  const successPayment = (transaction) => {
-  updatePaymentStatus.mutate(
-      {
-        refId: transaction.reference,
-        orderId: orderPackage.id,
-      },
-      {
-        onSuccess: () => {
-          next();
-        },
-        onError: () => {
-          alert("An error occurred while updating payment status");
-        },
-      },
-    );
-  };
-
-  const cancelPayment = () => {
-    alert("Are your sure you want payment cancel");
-  };
   const handleBack = () => {
     handleActiveAction(null);
   };
@@ -231,6 +187,26 @@ const ClearPackage = () => {
           )}
       </div>
     </FormProvider>
+  );
+};
+
+const BillingDetailsConfirmation = () => {
+  const { orderPackages } = useShopContext();
+  const { viewIndex } = useTabContext();
+
+  if (viewIndex === null) return;
+
+  const orderPackage = orderPackages?.[viewIndex];
+
+  if (!orderPackage) return;
+
+  return (
+    <div className="flex flex-col gap-[10px]">
+      <DestinationShippingAddress
+        destinationWarehouse={orderPackage.destinationWarehouse}
+      />
+      <BillingAddress billingDetails={orderPackage.billingDetails} />
+    </div>
   );
 };
 

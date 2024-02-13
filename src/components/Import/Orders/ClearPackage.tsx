@@ -412,7 +412,6 @@ const ShipmentCostsSummary = ({
   const orderPackage = orderPackages?.[viewIndex];
 
   if (!orderPackage) return;
-  console.log(orderPackage);
 
   const {
     shippingCost = 0,
