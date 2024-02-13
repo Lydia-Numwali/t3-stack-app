@@ -24,7 +24,7 @@ const useFetchInitiateShoppingRequest = (productId: string, token: string) => {
     }
   };
 
-  initiateShopping();
+  return initiateShopping();
 };
 
 export default useFetchInitiateShoppingRequest;

@@ -55,6 +55,7 @@ import {
   ImportPackageTableFooter,
   importPackageItemColumns,
 } from "./InitiateShipping";
+import OrderDetails from "~/components/Shop/Orders/OrderDetails";
 
 const emptyValue: ClearPackageInputs = {
   paymentMethod: "Paystack - Pay with Naira Card",
@@ -75,7 +76,7 @@ const ClearPackage = () => {
     { title: "Package Confirmation", content: <PackageConfirmation /> },
     {
       title: "Shipping & Billing Details Confirmation",
-      content: <BillingDetailsConfirmation />,
+      content: <OrderDetails />,
     },
     { title: "Clear Package", content: <ClearPackageStep /> },
     {
@@ -200,7 +201,7 @@ const PackageConfirmation = () => {
   if (viewIndex === null) return;
 
   const orderPackage = orderPackages?.[viewIndex];
-  console.log(orderPackage)
+  console.log(orderPackage);
 
   if (!orderPackage) return;
 
@@ -213,7 +214,6 @@ const PackageConfirmation = () => {
         and they will be shipped from here to our pickup office in Nigeria"
         />
         <DetailSection
-          
           label="Country of Purchase"
           value={orderPackage.originWarehouse}
         />

@@ -57,7 +57,7 @@ const OrderDetails = () => {
     (acc, item) => (acc += item.relatedCosts.shopForMeCost),
     0,
   );
-  const {user}=useAuthContext()
+  const { user } = useAuthContext();
   const defaultBillingAddress: BillingDetailsType = {
     firstName: user.firstName,
     lastName: user.lastName,
@@ -68,42 +68,48 @@ const OrderDetails = () => {
     country: user.billingAddress.country,
     state: user.billingAddress.state,
     city: user.billingAddress.state,
-    zipPostalCode:user.billingAddress.zipPostalCode
-  }
- 
+    zipPostalCode: user.billingAddress.zipPostalCode,
+  };
+
   return (
     <div className="flex flex-col gap-[30px] rounded-[20px] bg-white p-[20px] md:p-[30px]">
-      <RequestFormHeader title="Shop For Me Order Details" />
-      <div className="w-full md:w-max">
-        <OrderTrackingId
-          orderId={orderPackage.orderId}
-          trackingId={orderPackage.trackingId}
-        />
-      </div>
-      <OrderInformation
-        info={{
-          date: orderPackage.orderLocalDate.toLocaleString(),
-          shopForMeStatus: orderPackage.shopForMeStatus,
-          shippingStatus: orderPackage.shippingStatus,
-        }}
-      />
-      <div className="flex flex-col gap-[10px]">
-        <SectionHeader title="Package Details" />
-        <PackageOrigin>
-          <HighlightedInfo
-            text="Your Items will be delivered here after we help you purchase your them
-        and they will be shipped from here to our pickup office in Nigeria"
-          />
-          <DetailSection
-            label="Country of Purchase"
-            value={orderPackage.originWarehouse}
-          />
-        </PackageOrigin>
-        <hr className="block w-full border-dashed border-primary-900" />
-        {orderPackage.items.map((item, i) => {
-          return <ShopOrderItem key={i} item={item} index={i} />;
-        })}
-      </div>
+      {
+        (orderPackage.shippingStatus != "arrived destination" && (
+          <>
+            <RequestFormHeader title="Shop For Me Order Details" />
+            <div className="w-full md:w-max">
+              <OrderTrackingId
+                orderId={orderPackage.orderId}
+                trackingId={orderPackage.trackingId}
+              />
+            </div>
+            <OrderInformation
+              info={{
+                date: orderPackage.orderLocalDate.toLocaleString(),
+                shopForMeStatus: orderPackage.shopForMeStatus,
+                shippingStatus: orderPackage.shippingStatus,
+              }}
+            />
+            <div className="flex flex-col gap-[10px]">
+              <SectionHeader title="Package Details" />
+              <PackageOrigin>
+                <HighlightedInfo
+                  text="Your Items will be delivered here after we help you purchase your them
+          and they will be shipped from here to our pickup office in Nigeria"
+                />
+                <DetailSection
+                  label="Country of Purchase"
+                  value={orderPackage.originWarehouse}
+                />
+              </PackageOrigin>
+              <hr className="block w-full border-dashed border-primary-900" />
+              {orderPackage.items.map((item, i) => {
+                return <ShopOrderItem key={i} item={item} index={i} />;
+              })}
+            </div>
+          </>
+        ))
+      }
 
       {orderPackage.shopForMeStatus !== "Purchase not started" && (
         <div className="flex flex-col gap-[10px]">
@@ -116,8 +122,18 @@ const OrderDetails = () => {
 
       <div className="flex flex-col gap-[10px]">
         <SectionHeader title="Billing Details" />
-        <BillingAddress billingDetails={orderPackage.billingDetails.firstName==""?defaultBillingAddress:orderPackage.billingDetails} />
-        <PaymentsInformation>
+        <BillingAddress
+          billingDetails={
+            orderPackage.billingDetails.firstName == ""
+              ? defaultBillingAddress
+              : orderPackage.billingDetails
+          }
+        />
+        {
+
+          (orderPackage.shippingStatus != "arrived destination" && (
+            
+              <PaymentsInformation>
           <DetailSection
             label="Total Shipment Cost"
             value={
@@ -150,7 +166,10 @@ const OrderDetails = () => {
             }
             colSpanDesktop={4}
           />
-        </PaymentsInformation>
+        </PaymentsInformation> 
+        ))
+        }
+       
       </div>
 
       <div className="w-max">

@@ -61,6 +61,7 @@ import { LabelWithTooltip, PackageOrigin } from "../Requests/RequestDetails";
 import { PurpleDetailSection } from "./ClearPackage";
 import useFetchInitiateShoppingRequest from "~/hooks/useFetchInitiateShopping";
 import { useCookies } from "react-cookie";
+import OrderDetails from "./OrderDetails";
 
 type InitiateShippingInputs = {
   destinationWarehouse: (typeof DESTINATIONS)[number];
@@ -90,7 +91,7 @@ const InitiateShipping = () => {
     { title: "Package Confirmation", content: <PackageConfirmation /> },
     {
       title: "Shipping & Billing Address",
-      content: <BillingAddressStep />,
+      content: <OrderDetails />,
     },
     { title: "Initiate Shipping", content: <InitiateShippingStep /> },
     { title: "Success", content: <Success /> },
@@ -125,9 +126,16 @@ const InitiateShipping = () => {
   const handleFinish = () => {
     handleTabChange("orders");
   };
-  const handleInitiateShipping = () => {
-    // useFetchInitiateShoppingRequest(orderPackage.id, token);
-    next()
+  const handleInitiateShipping = async() => {
+    const data=await useFetchInitiateShoppingRequest(orderPackage.id, token);
+
+    if (data) {
+      
+      next()
+    }
+    else {
+      console.log("something went wrong")
+    }
   };
 
   useEffect(() => {

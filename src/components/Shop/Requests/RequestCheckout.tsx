@@ -952,7 +952,7 @@ export const ShopPackageTableFooter = ({
       <div className="col-span-1">
         <DetailSection
           label="Total Gross weight"
-          value={grossWeight ? formatWeight(grossWeight) : ""}
+          value={grossWeight ? formatWeight(grossWeight) : "NA"}
         />
       </div>
       <div className="col-span-2">
@@ -994,7 +994,7 @@ export const ShopPackageTableFooter = ({
           Total Shop For Me Cost:
         </span>
         <span className="title-lg md:headline-sm text-neutral-900">
-          {shopForMeCost ? formatCurrency(shopForMeCost) : ""}
+          {shopForMeCost >= 0 ? formatCurrency(shopForMeCost) : ""}
         </span>
       </div>
     </>

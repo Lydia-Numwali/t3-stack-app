@@ -48,6 +48,7 @@ import {
   type DetailSectionProps,
 } from "./InitiateShipping";
 import { PickUpInstructions } from "./OrdersPanel";
+import OrderDetails from "./OrderDetails";
 
 export type ClearPackageInputs = {
   paymentMethod: (typeof PAYMENT_METHODS)[number]["title"];
@@ -72,7 +73,7 @@ const ClearPackage = () => {
     { title: "Package Confirmation", content: <PackageConfirmation /> },
     {
       title: "Shipping & Billing Details Confirmation",
-      content: <BillingDetailsConfirmation />,
+      content: <OrderDetails />,
     },
     { title: "Clear Package", content: <ClearPackageStep /> },
     {
@@ -351,26 +352,12 @@ export const ClearPackageStep = () => {
       (acc, item) => (acc += item.weight),
       0,
     ),
-    itemsCostFromStore: orderPackage.items.reduce(
-      (acc, item) => (acc += item.originalCost),
-      0,
-    ),
-    processingFee: orderPackage.items.reduce(
-      (acc, item) => (acc += item.relatedCosts.processingFee),
-      0,
-    ),
-    urgentPurchaseFee: orderPackage.items.reduce(
-      (acc, item) => (acc += item.relatedCosts.urgentPurchaseFee),
-      0,
-    ),
-    shippingToOriginWarehouseCost: orderPackage.items.reduce(
-      (acc, item) => (acc += item.relatedCosts.shippingToOriginWarehouseCost),
-      0,
-    ),
-    shopForMeCost: orderPackage.items.reduce(
-      (acc, item) => (acc += item.relatedCosts.shopForMeCost),
-      0,
-    ),
+    itemsCostFromStore: orderPackage.totalItemCostFromStore,
+    processingFee: orderPackage.totalProcessingFee,
+    urgentPurchaseFee: orderPackage.totalUrgentPurchaseCost,
+    shippingToOriginWarehouseCost: orderPackage.totalShippingToOriginWarehouse,
+    shopForMeCost:
+      (orderPackage.totalShopForMeCost && orderPackage.totalShopForMeCost) || 0,
   };
 
   return (

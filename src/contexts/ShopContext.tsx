@@ -80,6 +80,10 @@ export type PackageCostsType = {
 export type ShopDraftPackageType = ShopInputs;
 
 export type ShopOrderPackageType = {
+  totalShippingToOriginWarehouse: any;
+  totalUrgentPurchaseCost: any;
+  totalProcessingFee: any;
+  totalItemCostFromStore: any;
   id: string;
   orderId: string;
   orderStatus: any;
