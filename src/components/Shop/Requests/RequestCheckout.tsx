@@ -125,7 +125,7 @@ const RequestCheckout = () => {
   const steps: [stepsContentType, ...stepsContentType[]] = [
     { title: "Package Confirmation", content: <PackageConfirmation /> },
     {
-      title: "Shipping & Billing Details Confirmation",
+      title: "Shipping & tion",
       content: <BillingAddress />,
     },
     { title: "Place Order", content: <PlaceOrder /> },
